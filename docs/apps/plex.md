@@ -3,6 +3,26 @@ Upon starting up Plex for the first time, it's very likely you'll need to follow
 
 Edit `~/.docker/compose/.env` and set `PLEX_NETWORK_MODE=host`. After claiming your server set `PLEX_NETWORK_MODE=` (back to blank).
 
+### After installing Plex through DockSTARTer and banging your head on the table because you keep getting the error "Plex server not found". Run the following commands. (Remove {})
+```
+docker exec -it {Docker Container Name} /bin/bash
+
+wget https://github.com/uglymagoo/plex-claim-server/raw/master/plex-claim-server.sh
+
+curl -L -o plex-claim-server.sh https://github.com/uglymagoo/plex-claim-server/raw/master/plex-claim-server.sh
+
+chmod +x plex-claim-server.sh
+
+./plex-claim-server.sh "{Plex Claim Code}"            ### plex.tv/claim (Requires the "") ###
+
+chown {username}:{username} "/config/Library/Application Support/Plex Media Server/Preferences.xml" 
+###{Username} most likely root###
+
+exit
+```
+
+Then restart container.
+
 ### Everything's gone to crap, and I need to re-make my server. What do I do?
 Thankfully, some of this information is well documented (but not easily found) over on Plex's website here!
 1. Moving an installation to another system: [https://support.plex.tv/articles/201370363-move-an-install-to-another-system/](https://support.plex.tv/articles/201370363-move-an-install-to-another-system/)
